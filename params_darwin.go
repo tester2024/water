@@ -17,7 +17,7 @@ const (
 // PlatformSpecificParams defines parameters in Config that are specific to
 // macOS. A zero-value of such type is valid, yielding an interface
 // with OS defined name.
-// Currently it is not possible to set the interface name in macOS.
+// Currently, it is not possible to set the interface name in macOS.
 type PlatformSpecificParams struct {
 	// Name is the name for the interface to be used.
 	// For TunTapOSXDriver, it should be something like "tap0".

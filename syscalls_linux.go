@@ -77,7 +77,7 @@ func setDeviceOptions(fd uintptr, config Config) (err error) {
 		}
 	}
 
-	// set clear the persist flag
+	// set clear to persist flag
 	value := 0
 	if config.Persist {
 		value = 1

@@ -39,10 +39,10 @@ func openDev(config Config) (ifce *Interface, err error) {
 		return nil, err
 	}
 	id := &windows.GUID{
-		0x0000000,
-		0xFFFF,
-		0xFFFF,
-		[8]byte{0xFF, 0xe9, 0x76, 0xe5, 0x8c, 0x74, 0x06, 0x3e},
+		Data1: 0x0000000,
+		Data2: 0xFFFF,
+		Data3: 0xFFFF,
+		Data4: [8]byte{0xFF, 0xe9, 0x76, 0xe5, 0x8c, 0x74, 0x06, 0x3e},
 	}
 	dev, err := tun.CreateTUNWithRequestedGUID(config.PlatformSpecificParams.Name, id, 0)
 	if err != nil {
@@ -55,8 +55,9 @@ func openDev(config Config) (ifce *Interface, err error) {
 	if len(networks) == 0 {
 		panic("network is empty")
 	}
+
 	// set ip addresses
-	ipPrefix := []netip.Prefix{}
+	var ipPrefix []netip.Prefix
 	for _, n := range networks {
 		ip, err := netip.ParsePrefix(n)
 		if err != nil {
@@ -69,7 +70,7 @@ func openDev(config Config) (ifce *Interface, err error) {
 		panic(err)
 	}
 	// set dns
-	servers := []netip.Addr{}
+	var servers []netip.Addr
 	s1, _ := netip.ParseAddr("8.8.8.8")
 	s2, _ := netip.ParseAddr("1.1.1.1")
 	servers = append(servers, s1)
@@ -82,6 +83,6 @@ func openDev(config Config) (ifce *Interface, err error) {
 	}
 
 	wintun := &wintun{dev: dev}
-	ifce = &Interface{isTAP: (config.DeviceType == TAP), ReadWriteCloser: wintun}
+	ifce = &Interface{isTAP: config.DeviceType == TAP, ReadWriteCloser: wintun}
 	return ifce, nil
 }

@@ -3,7 +3,7 @@
 
 package water
 
-// PlatformSpeficParams
+// PlatformSpecificParams
 type PlatformSpecificParams struct {
 }
 
