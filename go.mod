@@ -1,4 +1,4 @@
-module github.com/net-byte/water
+module github.com/tester2024/water
 
 go 1.20
 
